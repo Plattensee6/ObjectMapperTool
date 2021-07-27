@@ -1,13 +1,18 @@
 package com.tom.objectmapper;
 
-import com.tom.objectmapper.util.MappingUtil;
 import com.tom.objectmapper.exceptions.MappingException;
 import com.tom.objectmapper.exceptions.ObjectInstantiationException;
 import com.tom.objectmapper.exceptions.SetFieldException;
+import com.tom.objectmapper.util.MapperUtil;
 
 public class ObjectMapper {
+    private final MapperUtil mapppingUtils;
+
+    public ObjectMapper(MapperUtil mapppingUtils) {
+        this.mapppingUtils = mapppingUtils;
+    }
+    
     public <T> T mapObject(Class<T> className, Object mappedObject) throws MappingException{
-        MappingUtil mapppingUtils = new MappingUtil();
         T newObject = null;
         if (mapppingUtils.checkIfMappable(className, mappedObject.getClass())) {
             try {

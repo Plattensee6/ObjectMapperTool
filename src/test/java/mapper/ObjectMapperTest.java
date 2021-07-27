@@ -2,6 +2,7 @@ package mapper;
 
 import com.tom.objectmapper.ObjectMapper;
 import com.tom.objectmapper.exceptions.MappingException;
+import com.tom.objectmapper.util.MappingUtilImpl;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -30,7 +31,7 @@ public class ObjectMapperTest {
 
     @Before
     public void setUp() {
-        mapper = new ObjectMapper();
+        mapper = new ObjectMapper(MappingUtilImpl.getInstance());
         entity = new TestEntity("TestEntity", 1, true, "transientFieldEntity");
         dto = new TestDto("TestDto", 2, false, "transientFieldDto");
     }
