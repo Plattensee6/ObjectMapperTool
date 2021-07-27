@@ -8,7 +8,12 @@ import com.tom.objectmapper.annotations.MappedEntity;
 import com.tom.objectmapper.exceptions.ObjectInstantiationException;
 import com.tom.objectmapper.exceptions.SetFieldException;
 
-public class MappingUtil {
+public class MappingUtilImpl implements MapperUtil{
+    private static MappingUtilImpl instance = null;
+    
+    private MappingUtilImpl() {
+    }
+    
     /**
      * 
      * @param targetClass
@@ -16,6 +21,7 @@ public class MappingUtil {
      * @return true when the given Classes are annotated with 
      * MappedEntity annotation and mappedEntity attributes are equal.
      */
+    @Override
     public boolean checkIfMappable(Class<?> targetClass, Class<?> currentClass){
         boolean flag = false;
         if (targetClass.isAnnotationPresent(MappedEntity.class) && currentClass.isAnnotationPresent(MappedEntity.class)) {
@@ -37,6 +43,7 @@ public class MappingUtil {
     * @throws IllegalArgumentException
     * @throws IllegalAccessException 
     */
+    @Override
     public Map<String,Object> getFields(Object mappedObject) throws IllegalArgumentException, IllegalAccessException{
         Map<String, Object> fields = new HashMap<>();
         if (mappedObject == null) {
@@ -51,7 +58,7 @@ public class MappingUtil {
         }
         return fields;
     }
-    
+    @Override
     public <T> T createObject(Class<T> className, Map<String,Object> fields) throws ObjectInstantiationException, SetFieldException{
         T newObject;
         try {
@@ -75,4 +82,8 @@ public class MappingUtil {
         }
         return newObject;
     }
+    public static MappingUtilImpl getInstance() {
+        return (instance == null)? new MappingUtilImpl() : instance;
+    }
+    
 }
